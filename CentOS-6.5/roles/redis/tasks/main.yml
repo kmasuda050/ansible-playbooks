@@ -1,0 +1,5 @@
+- name: install redis 
+  yum: name=redis enablerepo=remi state=present
+
+- name: running and enabled
+  service: name=redis state=started enabled=yes

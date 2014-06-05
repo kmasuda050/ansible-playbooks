@@ -1,0 +1,8 @@
+- name: install mysql-community-server
+  yum: name=mysql-community-server state=present
+
+- name: config
+  template: src=my.cnf.j2 dest=/etc/my.cnf owner=root group=root mode=0644
+
+- name: running and enabled
+  service: name=mysqld state=started enabled=yes

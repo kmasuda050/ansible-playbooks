@@ -1,0 +1,3 @@
+- name: install mysql-community-release
+  yum: name=http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm state=present
+  sudo: true

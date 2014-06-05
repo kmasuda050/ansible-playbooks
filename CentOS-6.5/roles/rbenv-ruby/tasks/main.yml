@@ -1,0 +1,45 @@
+- name: install packages for ruby build
+  yum: name="{{ item }}" state=installed
+  with_items:
+    - gcc
+    - gcc-c++
+    - zlib
+    - zlib-devel
+    - readline
+    - readline-devel
+    - openssl-devel
+    - libxml2-devel
+    - libxslt-devel
+    - patch
+    - libffi-devel
+    - autoconf
+    - automake
+    - libtool
+    - bison
+    - mysql-community-devel
+
+- name: check ruby installed
+  shell: source $HOME/.bash_profile && rbenv versions | grep "{{ rbenv_ruby_version }}"
+  register: ruby_installed
+  ignore_errors: yes
+  sudo_user: "{{ rbenv_user }}"
+
+- name: install ruby
+  shell: source $HOME/.bash_profile && rbenv install -v "{{ rbenv_ruby_version }}"
+  when: ruby_installed|failed
+  sudo_user: "{{ rbenv_user }}"
+
+- name: set global
+  shell: source $HOME/.bash_profile && rbenv global "{{ rbenv_ruby_version }}"
+  when: ruby_installed|failed
+  sudo_user: "{{ rbenv_user }}"
+
+- name: gem install bundler
+  shell: source $HOME/.bash_profile && gem install bundler
+  when: ruby_installed|failed
+  sudo_user: "{{ rbenv_user }}"
+
+- name: rehash
+  shell: source $HOME/.bash_profile && rbenv rehash
+  when: ruby_installed|failed
+  sudo_user: "{{ rbenv_user }}"

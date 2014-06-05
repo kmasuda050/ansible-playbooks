@@ -1,0 +1,13 @@
+- user: name="{{ rbenv_user }}"
+
+- name: clone rbenv
+  git: repo=git://github.com/sstephenson/rbenv.git dest=/home/"{{ rbenv_user }}"/.rbenv version=v0.4.0
+  sudo_user: "{{ rbenv_user }}"
+
+- name: update bash_profile
+  copy: src=bash_profile dest=/home/"{{ rbenv_user }}"/.bash_profile
+  sudo_user: "{{ rbenv_user }}"
+
+- name: clone ruby-build
+  git: repo=git://github.com/sstephenson/ruby-build.git dest=/home/"{{ rbenv_user }}"/.rbenv/plugins/ruby-build version=v20140524
+  sudo_user: "{{ rbenv_user }}"

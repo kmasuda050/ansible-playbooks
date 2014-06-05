@@ -1,0 +1,4 @@
+- name: install
+  yum: name=libselinux-python state=present
+  sudo: true
+
