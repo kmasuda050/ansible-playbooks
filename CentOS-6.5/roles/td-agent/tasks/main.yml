@@ -1,0 +1,11 @@
+- name: install treasure-data GPG key
+  rpm_key: state=present key=http://packages.treasure-data.com/redhat/RPM-GPG-KEY-td-agent
+
+- name: add treasure-data repository
+  copy: src=td.repo dest=/etc/yum.repos.d/td.repo
+
+- name: install
+  yum: name=td-agent state=installed
+
+- name: running and enabled
+  service: name=td-agent state=started enabled=yes
