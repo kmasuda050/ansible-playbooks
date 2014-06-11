@@ -1,0 +1,8 @@
+- name: install postgresql93-server
+  yum: name=postgresql93-server state=present
+
+- name: initdb
+  command: service postgresql-9.3 initdb creates=/var/lib/pgsql/9.3/data/postgresql.conf
+
+- name: running and enabled
+  service: name=postgresql-9.3 state=started enabled=yes
